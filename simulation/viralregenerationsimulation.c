@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
-#include <windows.h>
+#include <windows.h> //For windows, use <unistd.h> for compatibility.
 #include <stdbool.h>
 
 void displaygridcells(int *grid, int size, char *charptr);
@@ -27,7 +27,7 @@ int main()
     int speed = userinput(matrixptr, size);
     bool gridchanges = true;
     bool *boolptr = &gridchanges;
-    
+
     commencing(charptr);
     while (gridchanges)
     {
@@ -37,7 +37,7 @@ int main()
         Sleep(speed);
     }
     printf("\nSimulation Complete!");
-    
+
     return 0;
 }
 
@@ -53,7 +53,7 @@ int inputsize()
         {
             return z;
         }
-        else 
+        else
         {
             printf("Input Number Within the Limit!");
         }
@@ -63,19 +63,19 @@ int inputsize()
 void displaygridcells(int *grid, int size, char *charptr)
 {
     printf("\033[H");
-    for (int i = 0; i < size ; i++)
+    for (int i = 0; i < size; i++)
     {
-        for (int o = 0; o < size ; o++)
+        for (int o = 0; o < size; o++)
         {
             if (*(grid + i * size + o) == 1)
             {
-                
+
                 printf(" %c ", *charptr);
             }
             else if (*(grid + i * size + o) == 2)
             {
                 printf(" %c ", *(charptr + 1));
-            }            
+            }
         }
         printf("\n");
     }
@@ -88,7 +88,7 @@ void inputvalues(int *grid, int size)
     {
         for (int j = 0; j < size; j++)
         {
-           *(grid + i * size + j) = (rand() % 2) + 1;
+            *(grid + i * size + j) = (rand() % 2) + 1;
         }
     }
 }
@@ -101,10 +101,11 @@ int checkneighborscount(int *grid, int x, int y, int size)
     {
         for (int lowerborder = -1; lowerborder <= 1; lowerborder++)
         {
-            if (upperborder == 0 && lowerborder == 0) continue;
+            if (upperborder == 0 && lowerborder == 0)
+                continue;
 
             int row = (x + upperborder + size) % size;
-            int col = (y + lowerborder + size) % size; 
+            int col = (y + lowerborder + size) % size;
 
             if (*(grid + row * size + col) == 1)
             {
@@ -131,18 +132,18 @@ int userinput(int *grid, int size)
             con = false;
         }
     }
-    
+
     if (speedcontrol == 1)
     {
-        return 200;
+        return 200; // if <unistd.h> change to 0.2
     }
     else if (speedcontrol == 2)
     {
-        return 1000;
+        return 1000; // if <unistd.h> change to 1
     }
     else if (speedcontrol == 3)
     {
-        return 3000;
+        return 3000; // if <unistd.h> change to 3
     }
 }
 
@@ -165,7 +166,7 @@ void simulationrule(int *grid, int size, bool *changes)
 
     for (int i = 0; i < size; i++)
     {
-        for (int o = 0; o < size ; o++)
+        for (int o = 0; o < size; o++)
         {
             if (*(grid + i * size + o) == 1)
             {
@@ -206,17 +207,17 @@ void takechardisplay(char *charptr)
     {
         printf("\n\nCHANGING ICON....\n\n1 for default, 2 for Custom.\nInput Here: ");
         scanf(" %d", &choice);
-        
+
         if (choice > 0 && choice < 3)
         {
             correct = false;
         }
-        else 
+        else
         {
             printf("\nInvalide Input!.");
         }
     }
-    
+
     if (choice == 1)
     {
         *charptr = 'O';
@@ -228,8 +229,7 @@ void takechardisplay(char *charptr)
         printf("Input Character for Live Cell: ");
         scanf(" %c", &input);
         *charptr = input;
-        
-        
+
         printf("Input Character for Dead Cell: ");
         scanf(" %c", &input);
         *(charptr + 1) = input;
@@ -261,10 +261,10 @@ void inputval(int *grid, int size, char *charptr)
     {
         printf("\n1 for Default, 2 for Custom.\nInput Here: ");
         scanf(" %d", &inputchoice);
-        if (inputchoice > 0 && inputchoice < 3) 
+        if (inputchoice > 0 && inputchoice < 3)
         {
             con = false;
-        } 
+        }
         else
         {
             printf("Invalid Input");
@@ -282,7 +282,7 @@ void inputval(int *grid, int size, char *charptr)
         {
             for (int j = 0; j < size; j++)
             {
-               *(grid + i * size + j) = 2;
+                *(grid + i * size + j) = 2;
             }
         }
 
@@ -295,7 +295,7 @@ void inputval(int *grid, int size, char *charptr)
         printf("\nInput Row and Column for each cell. (Ex. Row: 12 Col: 12 (Input: 12 12))\n");
         while (proceed)
         {
-            printf("\nInput Row and Column for #%d cell from (1 - %d): ", p , size);
+            printf("\nInput Row and Column for #%d cell from (1 - %d): ", p, size);
             scanf(" %d %d", &row, &col);
 
             if ((row > 0 && row < size) && (col > 0 && col < size))
@@ -313,7 +313,7 @@ void inputval(int *grid, int size, char *charptr)
                     printf("\nThe grid cell is already occupied with a live cell!");
                 }
             }
-            else 
+            else
             {
                 printf("\nInvalid Input. Try Again.");
             }
@@ -322,7 +322,6 @@ void inputval(int *grid, int size, char *charptr)
             {
                 proceed = false;
             }
-            
         }
     }
 }
