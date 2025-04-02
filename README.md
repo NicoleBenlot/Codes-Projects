@@ -1,4 +1,4 @@
-- 👋 Hi, I’m @Sphinx0945
+- 👋 Hi, I’m Nicole L. Benlot.
 - 👀 I’m interested in Programming.
 - 🌱 I’m currently learning C.
 <!---
