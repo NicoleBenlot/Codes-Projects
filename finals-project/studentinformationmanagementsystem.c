@@ -1,37 +1,42 @@
 #include <stdio.h>
+#include <stdlib.h>
 
 #define GRADE 5
 
 struct studentinfo 
 {
     char name[20];
-    int id = 0;
+    int id;
     int grades[GRADE];
 }
 
-void newinfo (struct studentinfo *structptr);
+void newinfo (struct studentinfo studentsdate, FILE *file);
+
+void avg()
 
 int main()
 {
     struct studentinfo studentsdata [25];
-    int *structptr = studentsdata;
     FILE *file = NULL;
 
-    file = fopen("myname.txt", "w");
-    fprintf(file,"Name: %s", name);
+    newinfo(studentsdate, *file);
 }
 
-void newinfo (struct studentinfo *structptr)
+void newinfo (struct studentinfo studentsdate, FILE *file)
 {
+    file = fopen("studentsinfo.txt", "w");
     printf("Enter Students Name: ");
-    fgets(*structptr->name, 20, stdin);
+    scanf("%s", &studentsdate->name);
+    fprintf(file, "Name: %s",*studentsdate->name);
 
     printf("Enter Students Id Number: ");
-    fgets(*structptr->id, sizeof(int), stdin);
+    scanf("%d", &studentsdate->id);
+    fprintf(file, "ID: %s",*studentsdate->id);
 
     for (int i = 0; i < GRADE; i++)
     {
         printf("Enter the Grade of Subject #%d", i);
-        fgets(*structptr->grades[i], sizeof(int), stdin);
+        scanf("%d", &studentsdate->grade[i]);
+        fprintf(file, "Subject #%d: %s",*studentsdate->grade[i], i);
     }
 }
